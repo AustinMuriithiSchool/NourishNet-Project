@@ -128,7 +128,8 @@ body {
 
 .btn:hover {
     background: #005bb5;
-}</style>
+}
+</style>
 </head>
 <body>
     <div class="container">

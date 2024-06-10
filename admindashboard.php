@@ -83,6 +83,7 @@ p {
         </div>
         <div class="taskbar-right">
             <button onclick="location.href='editadmins.php?username=<?php echo $username; ?>'">Edit Profile</button>
+            <button onclick="location.href='logout.php'">Logout</button>
         </div>
     </div>
     <div class="content">

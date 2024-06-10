@@ -81,11 +81,14 @@ p {
         </div>
         <div class="taskbar-right">
             <button onclick="location.href='editusers.php?username=<?php echo $username; ?>'">Edit Profile</button>
+            <button onclick="location.href='logout.php'">Logout</button>
         </div>
     </div>
     <div class="content">
         <h1>Welcome, <?php echo htmlspecialchars($username); ?>!</h1>
         <p>This is your user dashboard. Here you can view your profile, adjust settings, and manage your activities.</p>
+        <button onclick="location.href='uploadrecipe.php'">Upload Recipe</button>
+        <button onclick="location.href='viewrecipes.php'">View Recipes</button>
     </div>
 </body>
 </html>
