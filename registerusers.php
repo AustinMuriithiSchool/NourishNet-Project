@@ -54,69 +54,161 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Register</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .taskbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #29d978;
+            padding: 10px 20px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
         }
-        .register-container {
-            background: white;
+
+        .taskbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .taskbar-left h1 {
+            color: white;
+            margin-right: 20px;
+        }
+
+        .taskbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .taskbar-right a:hover {
+            color: #004a8a;
+        }
+
+        .content {
+            margin-top: 70px;
             padding: 20px;
+        }
+
+        .register-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .register-container h2 {
-            margin-bottom: 20px;
             color: #333;
+            margin-bottom: 20px;
+            text-align: center;
         }
+
         .register-container label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
+            color: #333;
         }
-        .register-container input, .register-container select {
+
+        .register-container input[type="text"],
+        .register-container input[type="password"],
+        .register-container select {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .register-container input[type="submit"] {
-            background: #0072ff;
-            border: none;
+            width: 100%;
+            background: #29d978;
             color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s;
         }
+
         .register-container input[type="submit"]:hover {
-            background: #005bb5;
+            background: #25c167;
         }
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #29d978;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #66cc66;
+        }
+
     </style>
 </head>
 <body>
-    <div class="register-container">
-        <h2>Register</h2>
-        <form method="post" action="registerusers.php">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username"><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password"><br>
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="email"><br>
-            <label for="user_type">User Type:</label>
-            <select id="user_type" name="user_type">
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select><br>
-            <input type="submit" value="Register">
-        </form>
+    <div class="taskbar">
+        <div class="taskbar-left">
+            <h1>NourishNet</h1>
+        </div>
+        <div class="taskbar-right">
+            
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="register-container">
+            <h2>Register</h2>
+            <form method="post" action="registerusers.php">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email">
+                <label for="user_type">User Type:</label>
+                <select id="user_type" name="user_type">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <input type="submit" value="Register">
+            </form>
+        </div>
     </div>
 </body>
-</html> 
+</html>
+ 

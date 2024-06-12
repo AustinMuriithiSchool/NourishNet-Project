@@ -60,76 +60,74 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <style>* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #0072ff, #00c6ff);
-}
+        body {
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
+        .container {
+            margin-top: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
 
-.login-box {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+        .edit-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.login-box h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-.textbox {
-    margin-bottom: 20px;
-    position: relative;
-}
+        .textbox {
+            margin-bottom: 20px;
+        }
 
-.textbox label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-    color: #555;
-}
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
 
-.textbox input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-.btn {
-    width: 100%;
-    padding: 10px;
-    background: #0072ff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+        input[type="submit"] {
+            background: #29d978;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-.btn:hover {
-    background: #005bb5;
-}
-</style>
+        input[type="submit"]:hover {
+            background: #25c167;
+        }
+    </style>
 </head>
 <body>
     <div class="container">

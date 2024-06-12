@@ -59,94 +59,166 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style> /* Reset some default styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #0072ff, #00c6ff);
-}
+        body {
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
+        .taskbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #29d978;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
 
-.login-box {
-    background: white;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+        .taskbar-left {
+            display: flex;
+            align-items: center;
+        }
 
-.login-box h2 {
-    margin-bottom: 20px;
-    color: #333;
-}
+        .taskbar-left h1 {
+            color: white;
+            margin-right: 20px;
+        }
 
-.textbox {
-    margin-bottom: 20px;
-    position: relative;
-}
+        .taskbar-right a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
 
-.textbox label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-    color: #555;
-}
+        .taskbar-right a:hover {
+            color: #004a8a;
+        }
 
-.textbox input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+        }
 
-.btn {
-    width: 100%;
-    padding: 10px;
-    background: #0072ff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.btn:hover {
-    background: #005bb5;
-}
-</style>
+        .login-box {
+            max-width: 400px;
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-box h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .textbox {
+            margin-bottom: 20px;
+        }
+
+        .textbox label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .textbox input[type="text"],
+        .textbox input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            background: #29d978;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #25c167;
+        }
+
+                /* Custom scrollbar styles */
+                ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #29d978;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #66cc66;
+        }
+        
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-box">
-            <h2>Login</h2>
-            <form method="post" action="loginusers.php">
-                <div class="textbox">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username">
-                </div>
-                <div class="textbox">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <input type="submit" class="btn" value="Login">
-            </form>
+    <div class="taskbar">
+        <div class="taskbar-left">
+            <h1>NourishNet</h1>
+        </div>
+        <div class="taskbar-right">
+            <a href="dashboard.php">Dashboard</a>
+            <a href="logout.php">Logout</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form method="post" action="loginusers.php">
+                    <div class="textbox">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username">
+                    </div>
+                    <div class="textbox">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <input type="submit" class="btn" value="Login">
+                </form>
+            </div>
         </div>
     </div>
 </body>
 </html>
+

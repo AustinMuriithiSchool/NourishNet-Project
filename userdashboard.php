@@ -15,69 +15,118 @@ $username = $_SESSION['username'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
-    <style>* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-body {
-    background: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
+        body {
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-.taskbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #0072ff;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
+        .taskbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #29d978;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
 
-.taskbar-left button,
-.taskbar-right button {
-    background: #005bb5;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    margin: 0 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
+        .taskbar-left h1 {
+            color: white;
+            margin-right: 20px;
+        }
 
-.taskbar-left button:hover,
-.taskbar-right button:hover {
-    background: #004a8a;
-}
+        .taskbar-left,
+        .taskbar-right {
+            display: flex;
+            align-items: center;
+        }
 
-.content {
-    margin-top: 70px;
-    padding: 20px;
-}
+        .taskbar-left button,
+        .taskbar-right button {
+            background: transparent;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
 
-h1 {
-    color: #333;
-}
+        .taskbar-left button:hover,
+        .taskbar-right button:hover {
+            color: #004a8a;
+        }
 
-p {
-    color: #666;
-}</style>
+        .content {
+            margin-top: 70px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .content button {
+            background: #29d978;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .content button:hover {
+            background: #25c167;
+        }
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #29d978;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #66cc66;
+        }
+
+    </style>
 </head>
 <body>
     <div class="taskbar">
         <div class="taskbar-left">
-            <button onclick="location.href='userdashboard.php'">Dashboard</button>
-            <button onclick="location.href='profile.php'">Profile</button>
-            <button onclick="location.href='settings.php'">Settings</button>
+        <h1>NourishNet</h1>
         </div>
         <div class="taskbar-right">
             <button onclick="location.href='editusers.php?username=<?php echo $username; ?>'">Edit Profile</button>
@@ -92,3 +141,4 @@ p {
     </div>
 </body>
 </html>
+
