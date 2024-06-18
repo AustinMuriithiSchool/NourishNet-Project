@@ -187,7 +187,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ::-webkit-scrollbar-thumb:hover {
             background: #66cc66;
         }
-        
+
     </style>
 </head>
 <body>
@@ -196,8 +196,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h1>NourishNet</h1>
         </div>
         <div class="taskbar-right">
-            <a href="dashboard.php">Dashboard</a>
-            <a href="logout.php">Logout</a>
         </div>
     </div>
 
