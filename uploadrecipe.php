@@ -195,7 +195,11 @@ $conn->close();
             <textarea id="instructions" name="instructions" required></textarea><br>
 
             <label for="tag">Recipe Type:</label>
-            <textarea id="tag" name="tag" required></textarea><br>
+            <select name="tag" id="tag"> 
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+            </select>
             
             <label for="image">Recipe Image:</label>
             <input type="file" id="image" name="image"><br>

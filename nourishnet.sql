@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2024 at 05:40 PM
+-- Generation Time: Jun 18, 2024 at 09:00 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -31,8 +31,18 @@ CREATE TABLE `rating` (
   `rating_id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `recipe_id` int(11) DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL CHECK (`rating` >= 1 and `rating` <= 5)
+  `rating` int(11) DEFAULT NULL CHECK (`rating` >= 1 and `rating` <= 5),
+  `rating_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `rating_comment` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`rating_id`, `user_id`, `recipe_id`, `rating`, `rating_date`, `rating_comment`) VALUES
+(1, 2, 1, 1, '2024-06-18 18:37:11', ''),
+(2, 4, 1, 5, '2024-06-18 18:49:30', 'w eats');
 
 -- --------------------------------------------------------
 
@@ -47,8 +57,16 @@ CREATE TABLE `recipe` (
   `recipe_description` text DEFAULT NULL,
   `recipe_ingredients` text DEFAULT NULL,
   `recipe_instructions` text DEFAULT NULL,
-  `recipe_image` varchar(255) DEFAULT NULL
+  `recipe_image` varchar(255) DEFAULT NULL,
+  `recipe_tag` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `recipe`
+--
+
+INSERT INTO `recipe` (`recipe_id`, `user_id`, `recipe`, `recipe_description`, `recipe_ingredients`, `recipe_instructions`, `recipe_image`, `recipe_tag`) VALUES
+(1, 2, 'ugali', 'a good kenyan meal \"i guess\"', 'flour\r\nwater\r\nsome other stuff', 'simmer some water\r\nadd some flour\r\nmix the flour and water ', 'uploads/Ugali_&_Sukuma_Wiki.jpg', 'dinner');
 
 -- --------------------------------------------------------
 
@@ -93,7 +111,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`user_id`, `username`, `password`, `email`, `user_type`) VALUES
 (1, 'austinrulez', '$2y$10$9WCIGoksQf8QQEQqkahuxeA8nXu2YGe64yOlJ9Dpn1pTKaNP4ezHe', 'austin@gmail.com', 'admin'),
 (2, 'tashierulez1', '$2y$10$4jP77QZaGAR2FqcLRGb7DOO4INYh67u3sDc4XAvMNI7Jiu4pXLW3e', 'natashaorwenyo@gmail.com', 'user'),
-(3, 'jasonrulez1', '$2y$10$JZrpaVEpyX4yN1v1O5nqYuyj3f9/xAhkQduYJfCSwv.JcKPqWanBK', 'jason@gmail.com', 'admin');
+(3, 'jasonrulez1', '$2y$10$JZrpaVEpyX4yN1v1O5nqYuyj3f9/xAhkQduYJfCSwv.JcKPqWanBK', 'jason@gmail.com', 'admin'),
+(4, 'exoexo', '$2y$10$62ehls/EgU5nMihcZi24q.oNjz6twzVCKQObLxg1f4AECQ.mArRhO', 'excellence@gmail.com', 'user');
 
 --
 -- Indexes for dumped tables
@@ -142,13 +161,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `rating_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rating_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `recipe`
 --
 ALTER TABLE `recipe`
-  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `recipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -160,7 +179,7 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
