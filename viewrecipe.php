@@ -21,10 +21,12 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
         $row = $result->fetch_assoc();
         $recipe_name = $row["recipe"];
         $description = $row["recipe_description"];
-        $ingredients = $row["recipe_ingredients"];
-        $instructions = $row["recipe_instructions"];
+        $ingredients = explode("\n", $row["recipe_ingredients"]); // Split ingredients by newline
+        $instructions = explode("\n", $row["recipe_instructions"]); // Split instructions by newline
         $tag = $row["recipe_tag"];
         $image = $row["recipe_image"];
+        $recipe_nutrition = $row["recipe_nutrition"]; // Assuming 'recipe_nutrition' is a column in your recipe table
+        $recipe_suitability = explode("\n", $row["recipe_suitability"]);
     } else {
         echo "Recipe not found";
         exit;
@@ -81,6 +83,7 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -114,8 +117,8 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
             z-index: 1000;
         }
 
-        .taskbar-left h1{
-        color: white;
+        .taskbar-left h1 {
+            color: white;
         }
 
         .taskbar-left a,
@@ -163,10 +166,11 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
             text-align: center;
         }
 
-        img {
+        img.recipe-image {
             display: block;
             margin: 0 auto;
-            max-width: 100%;
+            width: 100%; /* Ensures the image fills its container */
+            max-width: 600px; /* Limits the image width */
             height: auto;
             border-radius: 5px;
             margin-bottom: 20px;
@@ -217,6 +221,42 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
             font-weight: bold;
         }
 
+        .nutrition {
+            margin-top: 20px;
+        }
+
+        .nutrition h3 {
+            margin-bottom: 10px;
+        }
+
+        .nutrition ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nutrition ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #29d978;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #66cc66;
+        }
+        
     </style>
 </head>
 <body>
@@ -232,15 +272,43 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
 
     <div class="content">
         <h2><?php echo $recipe_name; ?></h2>
-        <img src="<?php echo $image; ?>" alt="<?php echo $recipe_name; ?>"><br><br>
+        <img class="recipe-image" src="<?php echo $image; ?>" alt="<?php echo $recipe_name; ?>"><br><br>
         <h3>Description:</h3>
         <p><?php echo $description; ?></p>
         <h3>Ingredients:</h3>
-        <p><?php echo $ingredients; ?></p>
+        <ul>
+            <?php foreach ($ingredients as $ingredient) : ?>
+                <li><?php echo $ingredient; ?></li>
+            <?php endforeach; ?>
+        </ul>
         <h3>Instructions:</h3>
-        <p><?php echo $instructions; ?></p>
+        <ol>
+            <?php foreach ($instructions as $instruction) : ?>
+                <li><?php echo $instruction; ?></li>
+            <?php endforeach; ?>
+        </ol>
         <h3>Recipe Type:</h3>
         <p><?php echo $tag; ?></p>
+
+        <!-- Nutritional Information -->
+        <div class="nutrition">
+            <h3>Nutritional Information:</h3>
+            <ul>
+                <?php foreach (explode("\n", $recipe_nutrition) as $nutrition_item) : ?>
+                    <li><?php echo $nutrition_item; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+
+        <!-- Recipe Suitability -->
+        <div class="suitability">
+            <h3>Recipe Suitability:</h3>
+            <ul>
+                <?php foreach ($recipe_suitability as $suitability_item) : ?>
+                    <li><?php echo $suitability_item; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
 
         <!-- Rating and Comment Form -->
         <h3>Rate this Recipe:</h3>
@@ -282,7 +350,3 @@ if(isset($_GET['recipe_id']) && !empty($_GET['recipe_id'])) {
     </div>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

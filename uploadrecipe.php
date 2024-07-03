@@ -2,14 +2,11 @@
 session_start();
 include 'config.php';
 
+$message = '';
+
 if (!isset($_SESSION['user_id'])) {
-    echo "You must be logged in to upload a recipe.";
-    exit;
-}
-
-$user_id = $_SESSION['user_id'];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $message = "You must be logged in to upload a recipe.";
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $recipe = $_POST['recipe'];
     $description = $_POST['description'];
     $ingredients = $_POST['ingredients'];
@@ -23,24 +20,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
             $image = $target_file;
         } else {
-            echo "Sorry, there was an error uploading your file.";
-            exit;
+            $message = "Sorry, there was an error uploading your file.";
         }
     }
 
+    $nutrition_data = $_POST['nutrition'];
+    $suitability = $_POST['suitability'];
+
     try {
-        $stmt = $conn->prepare("INSERT INTO recipe (user_id, recipe, recipe_description, recipe_ingredients, recipe_instructions, recipe_tag, recipe_image) 
-                                VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("issssss", $user_id, $recipe, $description, $ingredients, $instructions, $tag, $image);
+        $stmt = $conn->prepare("INSERT INTO recipe (user_id, recipe, recipe_description, recipe_ingredients, recipe_instructions, recipe_tag, recipe_image, recipe_nutrition, recipe_suitability) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("issssssss", $_SESSION['user_id'], $recipe, $description, $ingredients, $instructions, $tag, $image, $nutrition_data, $suitability);
         
         if ($stmt->execute()) {
-            echo "New recipe uploaded successfully";
+            $message = "New recipe uploaded successfully";
         } else {
-            echo "Error: " . $conn->error;
+            $message = "Error: " . $conn->error;
         }
         $stmt->close();
     } catch(Exception $e) {
-        echo "Error: " . $e->getMessage();
+        $message = "Error: " . $e->getMessage();
     }
 }
 
@@ -53,7 +52,7 @@ $conn->close();
     <meta charset="UTF-8">
     <title>Upload Recipe</title>
     <style>
-        * {
+                * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -148,8 +147,8 @@ $conn->close();
             background: #25c167;
         }
 
-                /* Custom scrollbar styles */
-                ::-webkit-scrollbar {
+         /* Custom scrollbar styles */
+         ::-webkit-scrollbar {
             height: 10px;
         }
 
@@ -166,13 +165,13 @@ $conn->close();
         ::-webkit-scrollbar-thumb:hover {
             background: #66cc66;
         }
-        
+
     </style>
 </head>
 <body>
     <div class="taskbar">
         <div class="taskbar-left">
-        <h1>NourishNet</h1>
+            <h1>NourishNet</h1>
         </div>
         <div class="taskbar-right">
             <button onclick="location.href='userdashboard.php'">Dashboard</button>
@@ -181,6 +180,9 @@ $conn->close();
     </div>
     <div class="content">
         <h2>Upload Recipe</h2>
+        <?php if (!empty($message)): ?>
+            <p><?php echo $message; ?></p>
+        <?php endif; ?>
         <form action="uploadrecipe.php" method="post" enctype="multipart/form-data">
             <label for="recipe">Recipe Name:</label>
             <input type="text" id="recipe" name="recipe" required><br>
@@ -199,10 +201,19 @@ $conn->close();
                 <option value="Breakfast">Breakfast</option>
                 <option value="Lunch">Lunch</option>
                 <option value="Dinner">Dinner</option>
-            </select>
-            
+                <option value="Snack">Snack</option>
+            </select><br>
+
             <label for="image">Recipe Image:</label>
             <input type="file" id="image" name="image"><br>
+            
+            <!-- New field for nutrition -->
+            <label for="nutrition">Nutrition Information:</label>
+            <textarea id="nutrition" name="nutrition"></textarea><br>
+
+             <!-- New field for suitability -->
+             <label for="suitability">Suitability:</label>
+            <textarea id="suitability" name="suitability"></textarea><br>
             
             <input type="submit" value="Upload Recipe">
         </form>
