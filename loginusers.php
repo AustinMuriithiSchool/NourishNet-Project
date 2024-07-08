@@ -32,6 +32,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $user_id;
             $_SESSION['username'] = $username;
             $_SESSION['user_type'] = $user_type;
+            $_SESSION['session_id'] = session_id();
+
+            // Insert or update the session in the database
+            $session_id = session_id();
+            $sql = "INSERT INTO sessions (session_id, user_id) VALUES ('$session_id', '$user_id')
+                    ON DUPLICATE KEY UPDATE last_activity = CURRENT_TIMESTAMP";
+            if ($conn->query($sql) !== TRUE) {
+                die("Error updating session: " . $conn->error);
+            }
 
             // Redirect based on user type
             if ($user_type == "admin") {
@@ -169,8 +178,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background: #25c167;
         }
 
-                /* Custom scrollbar styles */
-                ::-webkit-scrollbar {
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
             height: 10px;
         }
 
