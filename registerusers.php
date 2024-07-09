@@ -204,6 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <select id="user_type" name="user_type">
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
+                    <option value="nutritionist">Nutritionist</option>
                 </select>
                 <input type="submit" value="Register">
             </form>

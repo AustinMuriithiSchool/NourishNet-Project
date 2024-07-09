@@ -16,7 +16,7 @@ $username = $_SESSION['username'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <style> 
-                * {
+    * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -126,9 +126,7 @@ $username = $_SESSION['username'];
 <body>
     <div class="taskbar">
         <div class="taskbar-left">
-            <button onclick="location.href='admindashboard.php'">Dashboard</button>
-            <button onclick="location.href='manageusers.php'">Manage Users</button>
-            <button onclick="location.href='reports.php'">Reports</button>
+        <h1>NourishNet</h1>
         </div>
         <div class="taskbar-right">
             <button onclick="location.href='editadmins.php?username=<?php echo $username; ?>'">Edit Profile</button>
@@ -138,6 +136,10 @@ $username = $_SESSION['username'];
     <div class="content">
         <h1>Welcome, <?php echo htmlspecialchars($username); ?>!</h1>
         <p>This is the admin dashboard. Here you can manage users, view reports, and perform other administrative tasks.</p>
+        <button onclick="location.href='adminviewusers.php'">View Users</button>
+        <button onclick="location.href='viewrecipesadmin.php'">View Recipes</button>
+        <button onclick="location.href='viewdiets.php'">View Diets</button>
+        <button onclick="location.href='adminanalytics.php'">Check Analytics</button>
     </div>
 </body>
 </html>

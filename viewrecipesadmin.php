@@ -192,7 +192,7 @@ $result = $conn->query($sql);
             <h1>NourishNet</h1>
         </div>
         <div class="taskbar-right">
-            <a href="userdashboard.php">Dashboard</a>
+            <a href="admindashboard.php">Dashboard</a>
             <a href="logout.php">Logout</a>
         </div>
     </div>
@@ -251,4 +251,3 @@ $result = $conn->query($sql);
 <?php
 $conn->close();
 ?>
-
