@@ -6,12 +6,6 @@ if (!isset($_SESSION['username'])) {
     header("Location: index.html");
     exit();
 }
-
-// Redirect to login if user is not authenticated
-if (!isset($_SESSION['username'])) {
-    header("Location: index.html");
-    exit();
-}
 include 'db_connect.php';
 
 // Establish connection to the database

@@ -80,8 +80,8 @@ $conn->close();
             <a href="<?php echo $home_url; ?>"><i class="fas fa-folder-open"></i> Back to diet List</a>
             <!-- Link to view uploaded foods -->
             <?php if ($user_type == 'nutritionist' || $user_type == 'admin'): ?>
-                <a href="upload.php"><i class="fas fa-cloud-upload-alt"></i></a>
-                <a href="consultations.html"><i class="fas fa-comments"></i></a>
+                <a href="upload.php"><i class="fas fa-cloud-upload-alt"></i>upload</a>
+                <a href="consultation.php"><i class="fas fa-comments"></i>chat</a>
             <?php endif; ?>
         </nav>
     </header>
