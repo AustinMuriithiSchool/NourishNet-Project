@@ -55,6 +55,30 @@ $lowestRatedRecipeQuery = "
 $lowestRatedRecipeResult = $conn->query($lowestRatedRecipeQuery);
 $lowestRatedRecipe = $lowestRatedRecipeResult->fetch_assoc();
 
+// Fetch recipe tag counts
+$recipeTagCountsQuery = "
+    SELECT recipe_tag, COUNT(*) as tag_count
+    FROM recipe
+    GROUP BY recipe_tag
+    ORDER BY tag_count DESC";
+$recipeTagCountsResult = $conn->query($recipeTagCountsQuery);
+$recipeTagCounts = [];
+while ($row = $recipeTagCountsResult->fetch_assoc()) {
+    $recipeTagCounts[] = $row;
+}
+
+// Fetch user type counts
+$userTypeCountsQuery = "
+    SELECT user_type, COUNT(*) as type_count
+    FROM users
+    GROUP BY user_type";
+$userTypeCountsResult = $conn->query($userTypeCountsQuery);
+$userTypeCounts = [];
+while ($row = $userTypeCountsResult->fetch_assoc()) {
+    $userTypeCounts[] = $row;
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +88,6 @@ $lowestRatedRecipe = $lowestRatedRecipeResult->fetch_assoc();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics</title>
     <style>
-
         * {
             margin: 0;
             padding: 0;
@@ -145,8 +168,21 @@ $lowestRatedRecipe = $lowestRatedRecipeResult->fetch_assoc();
             font-size: 18px;
         }
 
-                /* Custom scrollbar styles */
-                ::-webkit-scrollbar {
+        .chart-container {
+            margin: 20px auto;
+            width: 80%;
+            height: 50%;
+        }
+
+        .chart-title {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 18px;
+            color: #29d978;
+        }
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar {
             height: 10px;
         }
 
@@ -163,8 +199,8 @@ $lowestRatedRecipe = $lowestRatedRecipeResult->fetch_assoc();
         ::-webkit-scrollbar-thumb:hover {
             background: #66cc66;
         }
-
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="taskbar">
@@ -181,14 +217,168 @@ $lowestRatedRecipe = $lowestRatedRecipeResult->fetch_assoc();
         <div class="stats">
             <div>Total Users: <?php echo $totalUsers; ?></div>
             <div>Total Recipes: <?php echo $totalRecipes; ?></div>
-            <div>Currently Logged-in Users: <?php echo $loggedInUsers; ?></div>
             <div>Highest Rated Recipe: <?php echo $highestRatedRecipe['recipe']; ?> (Rating: <?php echo round($highestRatedRecipe['avg_rating'], 2); ?>)</div>
             <div>Lowest Rated Recipe: <?php echo $lowestRatedRecipe['recipe']; ?> (Rating: <?php echo round($lowestRatedRecipe['avg_rating'], 2); ?>)</div>
         </div>
+        <div class="chart-container">
+            <div class="chart-title">Highest and Lowest Rated Recipes</div>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-title">Recipe Tag Distribution</div>
+            <canvas id="recipeTagChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <div class="chart-title">User Type Distribution</div>
+            <canvas id="userTypeChart"></canvas>
+        </div>
     </div>
+    <script>
+        const highestRatedRecipe = '<?php echo $highestRatedRecipe['recipe']; ?>';
+        const highestRatedRecipeRating = <?php echo round($highestRatedRecipe['avg_rating'], 2); ?>;
+        const lowestRatedRecipe = '<?php echo $lowestRatedRecipe['recipe']; ?>';
+        const lowestRatedRecipeRating = <?php echo round($lowestRatedRecipe['avg_rating'], 2); ?>;
+        const recipeTagCounts = <?php echo json_encode($recipeTagCounts); ?>;
+        const userTypeCounts = <?php echo json_encode($userTypeCounts); ?>;
+
+        // Bar chart for highest and lowest rated recipes
+        const barData = {
+            labels: ['Highest Rated Recipe', 'Lowest Rated Recipe'],
+            datasets: [{
+                label: 'Rating',
+                data: [highestRatedRecipeRating, lowestRatedRecipeRating],
+                backgroundColor: ['#4CAF50', '#F44336'],
+                hoverBackgroundColor: ['#45a049', '#e57373']
+            }]
+        };
+
+        const barConfig = {
+            type: 'bar',
+            data: barData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 5
+                    }
+                }
+            }
+        };
+
+        // Doughnut chart for recipe tag distribution
+        const recipeTagCtx = document.getElementById('recipeTagChart').getContext('2d');
+        const recipeTagChartConfig = {
+            type: 'doughnut',
+            data: {
+                labels: recipeTagCounts.map(tag => tag.recipe_tag),
+                datasets: [{
+                    label: 'Recipe Tag Distribution',
+                    data: recipeTagCounts.map(tag => tag.tag_count),
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#8e5ea2',
+                        '#3cba9f',
+                        '#e8c3b9',
+                        '#c45850',
+                        '#7d3c98',
+                        '#4b5f71',
+                        '#d73e68'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#8e5ea2',
+                        '#3cba9f',
+                        '#e8c3b9',
+                        '#c45850',
+                        '#7d3c98',
+                        '#4b5f71',
+                        '#d73e68'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Bar chart for user type distribution
+        const userTypeCtx = document.getElementById('userTypeChart').getContext('2d');
+        const userTypeChartConfig = {
+            type: 'bar',
+            data: {
+                labels: userTypeCounts.map(type => type.user_type),
+                datasets: [{
+                    label: 'User Type Distribution',
+                    data: userTypeCounts.map(type => type.type_count),
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#8e5ea2',
+                        '#3cba9f',
+                        '#e8c3b9',
+                        '#c45850',
+                        '#7d3c98',
+                        '#4b5f71',
+                        '#d73e68'
+                    ],
+                    hoverBackgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#8e5ea2',
+                        '#3cba9f',
+                        '#e8c3b9',
+                        '#c45850',
+                        '#7d3c98',
+                        '#4b5f71',
+                        '#d73e68'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        window.onload = function() {
+            new Chart(document.getElementById('barChart').getContext('2d'), barConfig);
+            new Chart(recipeTagCtx, recipeTagChartConfig);
+            new Chart(userTypeCtx, userTypeChartConfig);
+        };
+    </script>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
