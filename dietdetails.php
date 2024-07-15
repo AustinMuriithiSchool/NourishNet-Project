@@ -19,7 +19,7 @@ if ($user_type === 'user') {
 }
 
 // Include database connection
-include ('db_connect.php');
+include('db_connect.php');
 
 // Initialize variables to store food details
 $food_name = $description = $calories = $protein = $fat = $carbohydrates = $recipe = $categories = $image_url = '';
@@ -78,10 +78,10 @@ $conn->close();
         <a href="#" class="logo">NourishNet</a>
         <nav class="navbar">
             <a href="<?php echo $home_url; ?>"><i class="fas fa-folder-open"></i> Back to diet List</a>
-            <!-- Link to view uploaded foods -->
-            <?php if ($user_type == 'nutritionist' || $user_type == 'admin'): ?>
-                <a href="upload.php"><i class="fas fa-cloud-upload-alt"></i>upload</a>
-                <a href="consultation.php"><i class="fas fa-comments"></i>chat</a>
+            <!-- Link to view uploaded foods only for nutritionist -->
+            <?php if ($user_type == 'nutritionist'): ?>
+                <a href="upload.php"><i class="fas fa-cloud-upload-alt"></i> upload</a>
+                <a href="consultation.php"><i class="fas fa-comments"></i> chat</a>
             <?php endif; ?>
         </nav>
     </header>

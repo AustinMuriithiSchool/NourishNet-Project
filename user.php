@@ -102,6 +102,7 @@ mysqli_close($conn);
                         </a>
                         <h3 class="item-title"><?php echo $recipe['recipe']; ?></h3>
                         <p class="item-description"><?php echo $recipe['recipe_description']; ?></p>
+                        <p class="item-date">Created on: <?php echo date('F j, Y', strtotime($recipe['date_created'])); ?></p>
                         <?php if (!empty($recipe['recipe_image'])): ?>
                             <img src="<?php echo $recipe['recipe_image']; ?>" alt="Recipe Image" class="item-image">
                         <?php endif; ?>
@@ -133,6 +134,7 @@ mysqli_close($conn);
                         <h3 class="item-title"><?php echo $diet['food_name']; ?></h3>
                         <p class="item-description"><?php echo $diet['description']; ?></p>
                         <p class="item-category">Category: <?php echo $diet['category_name']; ?></p> <!-- Display category name -->
+                        <p class="item-date">Created on: <?php echo date('F j, Y', strtotime($diet['created_at'])); ?></p>
                         <?php if (!empty($diet['image_url'])): ?>
                             <img src="<?php echo $diet['image_url']; ?>" alt="Food Image" class="item-image">
                         <?php endif; ?>

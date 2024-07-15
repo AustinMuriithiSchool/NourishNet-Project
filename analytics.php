@@ -83,133 +83,26 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analytics</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
+    <link rel="stylesheet" href="../styling/analytics.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-        body {
-            background: #f4f4f4;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
 
-        .container {
-            width: 80%;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #29d978;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .taskbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: #29d978;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .taskbar-left h1 {
-            color: white;
-            margin-right: 20px;
-        }
-
-        .taskbar-left,
-        .taskbar-right {
-            display: flex;
-            align-items: center;
-        }
-
-        .taskbar-left button,
-        .taskbar-right button {
-            background: transparent;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: color 0.3s;
-            font-size: 16px;
-        }
-
-        .taskbar-left button:hover,
-        .taskbar-right button:hover {
-            color: #004a8a;
-        }
-
-        .stats {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .stats div {
-            margin: 10px 0;
-            font-size: 18px;
-        }
-
-        .chart-container {
-            margin: 20px auto;
-            width: 80%;
-            height: 50%;
-        }
-
-        .chart-title {
-            text-align: center;
-            margin: 10px 0;
-            font-size: 18px;
-            color: #29d978;
-        }
-
-        /* Custom scrollbar styles */
-        ::-webkit-scrollbar {
-            height: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f4f4f4;
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #29d978;
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #66cc66;
-        }
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-<div class="taskbar">
+    <div class="taskbar">
         <div class="taskbar-left">
-        <h1>NourishNet</h1>
+            <h1>NourishNet</h1>
         </div>
         <div class="taskbar-right">
-        <button onclick="location.href='admin.php'">Home</button>
-        <button onclick="location.href='logout.php'">Logout</button>
+            <a href="admin.php"><i class="fas fa-home"></i>home</a>
+            <a href="logout.php"><i class="fas fa-sign-out"></i>logout</a>
         </div>
     </div>
     <div class="container">
@@ -217,8 +110,10 @@ $conn->close();
         <div class="stats">
             <div>Total Users: <?php echo $totalUsers; ?></div>
             <div>Total Recipes: <?php echo $totalRecipes; ?></div>
-            <div>Highest Rated Recipe: <?php echo $highestRatedRecipe['recipe']; ?> (Rating: <?php echo round($highestRatedRecipe['avg_rating'], 2); ?>)</div>
-            <div>Lowest Rated Recipe: <?php echo $lowestRatedRecipe['recipe']; ?> (Rating: <?php echo round($lowestRatedRecipe['avg_rating'], 2); ?>)</div>
+            <div>Highest Rated Recipe: <?php echo $highestRatedRecipe['recipe']; ?> (Rating:
+                <?php echo round($highestRatedRecipe['avg_rating'], 2); ?>)</div>
+            <div>Lowest Rated Recipe: <?php echo $lowestRatedRecipe['recipe']; ?> (Rating:
+                <?php echo round($lowestRatedRecipe['avg_rating'], 2); ?>)</div>
         </div>
         <div class="chart-container">
             <div class="chart-title">Highest and Lowest Rated Recipes</div>
@@ -308,7 +203,7 @@ $conn->close();
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(tooltipItem) {
+                            label: function (tooltipItem) {
                                 return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString();
                             }
                         }
@@ -360,7 +255,7 @@ $conn->close();
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(tooltipItem) {
+                            label: function (tooltipItem) {
                                 return tooltipItem.label + ': ' + tooltipItem.raw.toLocaleString();
                             }
                         }
@@ -374,11 +269,12 @@ $conn->close();
             }
         };
 
-        window.onload = function() {
+        window.onload = function () {
             new Chart(document.getElementById('barChart').getContext('2d'), barConfig);
             new Chart(recipeTagCtx, recipeTagChartConfig);
             new Chart(userTypeCtx, userTypeChartConfig);
         };
     </script>
 </body>
+
 </html>

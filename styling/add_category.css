@@ -57,7 +57,7 @@ body {
 }
 
 .section {
-    padding: 3rem 9%;
+    padding: 2rem 9%;
 }
 
 .heading {
@@ -66,11 +66,11 @@ body {
     text-transform: uppercase;
     margin-bottom: 4rem;
     margin-top: 2rem;
-    font-size: 4rem;
+    font-size: 2rem;
 }
 
 .add-category {
-    max-width: 50rem;
+    max-width: 40rem;
     margin: 0 auto;
     padding: 3rem;
     background: var(--white);
@@ -84,7 +84,7 @@ body {
     text-transform: uppercase;
     margin-bottom: 4rem;
     margin-top: 2rem;
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 .category-form .input-group {
