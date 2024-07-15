@@ -182,7 +182,7 @@ mysqli_close($conn);
     </script>
     <!-- Footer Section -->
     <footer class="footer">
-        <p>&copy; 2024 Nutritionist. All rights reserved.</p>
+        <p>&copy; 2024 NourishNet. All rights reserved.</p>
     </footer>
 </body>
 

@@ -105,7 +105,7 @@ $conn->close();
     </div>
 
     <div class="footer">
-        &copy; 2024 Nutritionist. All rights reserved.
+        &copy; 2024 NourishNet. All rights reserved.
     </div>
 </body>
 
